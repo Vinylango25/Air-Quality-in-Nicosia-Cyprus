@@ -188,4 +188,3 @@ Air-Quality-in-Nicosia-Cyprus/
 ├── figures/             # Visualizations (fig3.png to fig11.png)
 ├── notebooks/           # Calibration Jupyter Notebooks
 ├── README.md            # Full project documentation
-└── requirements.txt     # Python package dependencies
