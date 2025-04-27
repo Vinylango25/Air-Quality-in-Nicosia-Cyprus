@@ -67,114 +67,125 @@ All models incorporated **temperature and humidity** as additional input feature
 
 ---
 
-## 📊 Results and Visualizations
-
-### 1. Raw Sensor Signal Performance
-
-![Figure 1: Raw sensor performance](fig1.png)
-
-> Raw signals showed significant biases and variability relative to reference analyzers. CO and NO sensors were particularly affected by **temperature drift** and **cross-interference**.
+# 📊 Results and Discussion
 
 ---
 
-### 2. Model Performance Comparison (Before and After Calibration)
+## 2.1.1 Data Splitting Schemes
 
-![Figure 2: Model Comparison - R² and RMSE](fig2.png)
+![Figure 3: Data Splitting Strategies](fig3.png)
 
-| Pollutant | Best Model | R² (1-min) | R² (1-hour) | RMSE (1-hour) |
-|:----------|:-----------|:-----------|:------------|:-------------|
-| CO        | XGBoost     | 0.73       | 0.89        | ~0.25 ppm    |
-| NO        | Random Forest | 0.68     | 0.87        | ~4.5 ppb     |
-| NO₂       | Random Forest | 0.66     | 0.84        | ~3.8 ppb     |
-| O₃        | Random Forest | 0.71     | 0.88        | ~5.1 ppb     |
-| NOx       | XGBoost     | 0.72       | 0.90        | ~6.0 ppb     |
-
-✅ Significant improvement across all pollutants after ML calibration, especially when using 1-hour averages.
+- Calibration was performed every 1, 3, and 6 months using different data splitting strategies.
+- For monthly calibration, data was sampled continuously from the start of each month.
+- For 3- and 6-month calibration, both continuous and interceptive sampling strategies were explored.
+- Results showed minimal difference between different sampling approaches.
+- Only the schemes illustrated in Figure 3 were considered for the main analysis.
 
 ---
 
-### 3. Feature Importance
+## 2.1.2 Calibration Results Overview
 
-![Figure 3: Feature Importance - RF](fig3.png)
+![Figure 4: Correlation between Calibrated LCSs and Reference Measurements](fig4.png)
 
-> Environmental covariates — particularly **temperature** — had a strong influence on raw sensor outputs, justifying their inclusion in the calibration models.
-
----
-
-### 4–8. Post-Calibration Scatterplots for Each Pollutant
-
-#### CO Calibration
-![Figure 4: CO calibration](fig4.png)
-
-#### NO Calibration
-![Figure 5: NO calibration](fig5.png)
-
-#### NO₂ Calibration
-![Figure 6: NO₂ calibration](fig6.png)
-
-#### O₃ Calibration
-![Figure 7: O₃ calibration](fig7.png)
-
-#### NOx Calibration
-![Figure 8: NOx calibration](fig8.png)
-
-> Post-calibration, strong correlations (R² > 0.85) were achieved between calibrated sensor outputs and reference-grade measurements for all target gases.
+- 80% of the data was used for training and 20% for validation with 2-min time resolution.
+- CO LCS exhibited good agreement with reference data even without ML calibration.
+- NO₂, O₃, and SO₂ LCSs initially showed moderate to poor correlation.
+- ML calibration significantly improved performance for CO, NO₂, and O₃ (r > 0.9).
+- SO₂ calibration remained poor post-ML calibration due to ambient concentrations being below the sensor detection limit.
 
 ---
 
-### 9. Temporal Resolution Impact: 1-min vs 1-hour
+## 2.1.3 ML Model Performance Evaluation
 
-![Figure 9: 1-min vs 1-hour aggregation impact](fig9.png)
+![Figure 5: Heatmaps of Calibration Performance (R² and NRMSE)](fig5.png)
 
-> **1-hour aggregation** significantly improved R² and reduced RMSE across all models by smoothing sensor noise and environmental variability.
-
----
-
-### 10. Transferability of Calibration Models
-
-![Figure 10: Transferability testing](fig10.png)
-
-> Calibration models trained during specific time periods showed **reduced accuracy** when tested on different seasons, highlighting the **necessity of periodic retraining** to account for sensor drift and environmental shifts.
+- Random Forest (RF) consistently achieved the highest R², followed by ANN and XGBoost.
+- ML calibrations demonstrated lower NRMSE compared to laboratory calibrations.
+- CO showed good natural performance; NO₂ and O₃ performance improved dramatically after cross-sensitivity corrections.
+- Including NO₂ and O₃ cross-sensitivities as features significantly enhanced model predictions.
+- SO₂ remained the most challenging pollutant to calibrate effectively.
 
 ---
 
-### 11. EU Compliance After Calibration
+## 2.1.4 Target Diagram Analysis
 
-![Figure 11: EU compliance check](fig11.png)
+![Figure 6: Target Diagrams for Bias and Variance Assessment](fig6.png)
 
-> After calibration:
-- All gases (CO, NO, NO₂, O₃, NOx) **achieved R² > 0.5**, meeting the EU 2008/50/EC minimum threshold for indicative measurements.
-- CO and NOx calibrations even reached **reference-level R² (>0.85)** at 1-hour resolution.
-
----
-
-## 🔍 Key Technical Insights
-
-- **Random Forest** and **XGBoost** consistently delivered the best calibration results.
-- **Environmental variables** are essential inputs — excluding them drastically worsens model performance.
-- **1-hour averaging** is highly beneficial for low-cost sensor deployment strategies.
-- **Model retraining** every 6–12 months is recommended to maintain calibration validity.
-- **Low-cost sensors**, when properly calibrated, can effectively supplement regulatory networks, enabling broader, real-time urban air quality monitoring.
+- RF, ANN, and XGBoost models achieved lower normalized RMSE (nRMSE) compared to LR and SVR.
+- LAB calibrations for NO₂, O₃, and SO₂ exhibited large positive bias; ML models corrected this bias.
+- ML models achieved near-zero bias for CO, NO₂, and O₃.
+- LAB calibrated data had higher variance compared to ML calibrated data.
+- All ML models' points fell within unit circles, indicating no overfitting.
 
 ---
 
-## 📢 Practical Recommendations
+## 2.1.5 EU Directive Compliance Evaluation
 
-- **Preferred Calibration Models:** Use Random Forest or XGBoost for operational deployments.
-- **Input Features:** Always include temperature and humidity with raw sensor signals.
-- **Temporal Strategy:** Collect and use 1-hour averages to balance noise reduction and temporal resolution.
-- **Retraining Protocol:** Implement seasonal retraining schedules to adjust for drift and sensor degradation.
-- **Cost Optimization:** Deploy sparse reference stations combined with clusters of calibrated low-cost sensors.
+![Figure 7: Target Diagrams for EU DQO Compliance](fig7.png)
+
+- EU DQOs require uncertainty below 25% for CO, NO₂, SO₂ and 30% for O₃.
+- RF, ANN, and XGBoost models met DQOs for CO, NO₂, and O₃, but at concentrations well below the EU limit values.
+- LAB calibrations had uncertainties exceeding 75% and were excluded from compliance analysis.
+- LR and SVR models failed to meet DQO requirements for NO₂, O₃, and SO₂.
+- SO₂ calibrations never met DQOs even after ML recalibration due to low ambient concentrations.
 
 ---
 
-## 🏛️ Project Structure
+## 2.1.6 US EPA Data Quality Objectives (DQO) Compliance Assessment
+
+![Figure 8: Spider Plots for Precision and Bias Error Analysis](fig8.png)
+
+- EPA sets 10%, 25%, 30%, 50% error thresholds for regulatory and non-regulatory uses.
+- LAB calibrations generally exhibited higher errors compared to ML calibrations.
+- ML calibrations (RF, ANN, XGBoost) reduced precision and bias errors to below 25–30% for CO, NO₂, and O₃.
+- CO LAB calibration alone allowed for hotspot and citizen science applications (30–50% error).
+- SO₂ calibrations achieved moderate improvement post-ML (30–45% error).
+- Neither LAB nor ML consistently met the 10% threshold required for regulatory applications.
+
+---
+
+## 2.1.7 Feature Sensitivity Analysis
+
+![Figure 9: Variable Importance for LCS Calibration](fig9.png)
+
+- Sensitivity analysis used Random Forest models to identify feature importance.
+- CO calibration depended mainly on CO concentration; little influence from temperature or RH.
+- NO₂ and O₃ calibrations were heavily influenced by temperature, RH, and cross-sensitivities.
+- Including cross-sensitive gases improved NO₂ and O₃ calibrations by 6–9% in R².
+- SO₂ model performance was affected equally by target gas, environmental, and temporal factors.
+
+---
+
+## 2.1.8 Effect of Training Data Fraction and Calibration Frequency
+
+![Figure 11: NRMSE and REUmax as a Function of Training Data Fraction and Calibration Frequency](fig11.png)
+
+- NRMSE and REUmax decreased as the fraction of training data increased.
+- Monthly calibration (1-month frequency) achieved better performance than 3- or 6-month calibration.
+- RF models performed better with frequent recalibration due to limited extrapolation ability.
+- For monthly calibration, 70% of data was needed for CO and NO₂ and 50% for O₃ to meet EU DQOs.
+- Interpretive sampling strategies significantly reduced data requirements (down to 22% for long-term calibration).
+
+---
+
+# 📋 Conclusion
+
+- Random Forest models consistently achieved the best calibration performance for CO, NO₂, O₃, and SO₂ sensors.
+- CO LCS was minimally influenced by temperature and RH, while NO₂ and O₃ were highly sensitive to environmental variables.
+- Increasing temporal resolution to 2-min reduced training data requirements by ~6.3%.
+- Monthly calibrations required about 50% of data, while 3- or 6-month calibrations needed around 60%.
+- Interpretive sampling reduced data requirements to as low as 22%, cutting collocation costs significantly.
+- These findings enable more cost-effective, scalable, and high-quality deployment of low-cost sensor networks.
+
+---
+
+# 📚 Project Structure
 
 ```bash
 Air-Quality-in-Nicosia-Cyprus/
 │
 ├── data/                # Raw and processed datasets
-├── figures/             # Saved figures (fig1.png to fig11.png)
+├── figures/             # Visualizations (fig3.png to fig11.png)
 ├── notebooks/           # Calibration Jupyter Notebooks
-├── README.md            # Project documentation
+├── README.md            # Full project documentation
 └── requirements.txt     # Python package dependencies
