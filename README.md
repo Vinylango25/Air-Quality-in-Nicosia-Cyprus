@@ -31,12 +31,12 @@ This project investigates the **machine learning calibration** of low-cost senso
 ## 🛠️ Experimental Setup
 
 - **Location:** Urban roadside station at Strovolou Avenue, Nicosia.
-  ![Figure 3: Data Splitting Strategies](fig1.png)
  <img src="fig1.png" alt="Cost Evaluation" width="850">
 - **Sensors:** Electrochemical gas sensors measuring CO, NO, NO₂, O₃.
 - **Reference System:** Standard EU regulatory analyzers.
 - **Auxiliary Data:** Temperature and humidity readings.
 - **Temporal Resolution:** Data recorded at 1-min intervals, aggregated to 1-hour for analysis.
+  <img src="fig3.png" alt="Cost Evaluation" width="850">
 
 ---
 
