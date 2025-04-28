@@ -36,7 +36,7 @@ This project investigates the **machine learning calibration** of low-cost senso
 - **Reference System:** Standard EU regulatory analyzers.
 - **Auxiliary Data:** Temperature and humidity readings.
 - **Temporal Resolution:** Data recorded at 1-min intervals, aggregated to 1-hour for analysis.
-  <img src="fig3.png" alt="Cost Evaluation" width="850">
+  <img src="fg3.png" alt="Cost Evaluation" width="850">
 
 ---
 
