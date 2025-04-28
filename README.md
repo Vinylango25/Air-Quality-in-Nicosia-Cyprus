@@ -39,7 +39,7 @@ The objectives of the project are multifaceted:
 
 Measurements were collected from an urban roadside monitoring station at Strovolou Avenue, Nicosia, Cyprus.
 
-<img src="fig1.png" alt="Site Location" width="750"/>
+<img src="fig1.png" alt="Site Location" width="850"/>
 
 Key elements of the experimental setup include:
 
@@ -50,7 +50,7 @@ Key elements of the experimental setup include:
   - LCSs recorded signals every 2 seconds, aggregated into 2-minute averages.
   - Reference instruments reported 2-minute concentrations.
 - **Study Period**: October 2019 to March 2020 (6 months).
-  <img src="fg3.png" alt="Site Location" width="750"/>
+  <img src="fg3.png" alt="Site Location" width="1000"/>
 
 The site experienced Mediterranean climatic conditions with variable temperature and humidity, posing real-world environmental challenges for sensor calibration.
 
@@ -132,7 +132,7 @@ These baseline results strongly justified the need for machine learning-based ca
 
 After applying machine learning calibration techniques, substantial improvements were observed across all sensors, except for SO₂. Post-calibration, the Pearson correlation coefficients (r) exceeded 0.9 for CO, NO₂, and O₃, indicating a very strong linear relationship between the calibrated sensor outputs and the reference-grade measurements. This substantial gain in correlation demonstrates that ML models were highly effective in correcting for the non-linearities, environmental biases, and cross-sensitivities inherent in the raw sensor data.
 
-<img src="fig4.png" alt="Calibration Performance Overview" width="750"/>
+<img src="fig4.png" alt="Calibration Performance Overview" width="1000"/>
 
 Random Forest (RF) consistently delivered the best calibration results across pollutants, outperforming ANN, XGBoost, SVR, and Linear Regression. RF’s superior performance can be attributed to its ensemble nature, which averages multiple decision trees and thus captures non-linear patterns without overfitting. While ANN and XGBoost also performed strongly, RF models were found to be more robust, especially under varying environmental conditions.
 
@@ -144,7 +144,7 @@ SO₂ calibration, however, remained problematic even after ML correction. Despi
 
 Target diagrams were used to decompose model errors into bias and variance components, providing deeper insights into calibration performance. For CO, NO₂, and O₃, machine learning models—particularly RF—successfully reduced both bias and variance compared to laboratory calibration baselines. In contrast, LAB calibrations showed systematic positive biases for NO₂ and O₃, reflecting consistent overestimations relative to the reference measurements. This highlights one of the critical weaknesses of laboratory-based calibration when applied to field conditions: lack of adaptability to environmental and cross-sensitivity effects.
 
-<img src="fig6.png" alt="Target Diagram" width="750"/>
+<img src="fig6.png" alt="Target Diagram" width="850"/>
 
 For CO sensors, RF models achieved near-zero bias and very low normalized RMSE (nRMSE), confirming that calibration models effectively corrected both systematic and random errors. The situation was similar for NO₂ and O₃, albeit with slightly higher nRMSE values due to more pronounced environmental dependencies. Importantly, all ML-calibrated points fell within the unit circle of the target diagrams, implying that the models did not exhibit signs of overfitting and generalized well to unseen data.
 
@@ -156,11 +156,11 @@ In the case of SO₂, none of the models, including RF, managed to reduce bias o
 
 Evaluating compliance against the EU DQOs revealed that ML-calibrated CO, NO₂, and O₃ measurements successfully met the thresholds required for indicative monitoring. RF models, in particular, demonstrated relative expanded uncertainties (REUs) well below the 25% and 30% limits stipulated by EU Directive 2008/50/EC. This marks a significant achievement, indicating that with proper calibration, low-cost sensors can contribute meaningful data for non-regulatory urban air quality monitoring networks.
 
-<img src="fig7.png" alt="EU Compliance" width="750"/>
+<img src="fig7.png" alt="EU Compliance" width="1000"/>
 
 SO₂ calibration, however, failed to meet the DQOs under any model. The primary reasons include the sensor's poor signal-to-noise ratio at ambient concentrations and possible cross-sensitivities not adequately corrected even with advanced modeling. Thus, while ML techniques can greatly enhance LCS performance for certain pollutants, gas-specific limitations must be considered when planning sensor deployments.
 
-<img src="fig8.png" alt="EU Compliance" width="750"/>
+<img src="fig8.png" alt="EU Compliance" width="1000"/>
 
 US EPA DQO evaluations using precision and bias thresholds confirmed similar trends. ML models met the less stringent non-regulatory thresholds (25–30% errors) for CO, NO₂, and O₃, making them suitable for applications like citizen science, community monitoring, and hotspot identification. However, none of the sensors achieved the <10% precision and bias errors necessary for regulatory enforcement purposes. This reinforces the current positioning of LCS networks as complementary, rather than primary, air quality monitoring solutions.
 
@@ -171,7 +171,7 @@ US EPA DQO evaluations using precision and bias thresholds confirmed similar tre
 
 Random Forest feature importance analysis provided critical insights into what factors most influenced sensor calibration performance. For CO sensors, the Net Sensor Signal (NSS) was overwhelmingly the most important feature, indicating that CO LCS outputs were relatively unaffected by environmental variables or cross-sensitivities. This explains why CO sensors showed good baseline performance even before machine learning calibration.
 
-<img src="fig9.png" alt="Feature Importance" width="750"/>
+<img src="fig9.png" alt="Feature Importance" width="850"/>
 
 In contrast, calibrations for NO₂ and O₃ depended heavily on temperature, relative humidity, and cross-sensitivities to other gases. Including auxiliary variables as features improved calibration R² scores by up to 9%, emphasizing that environmental compensation is essential for accurate modeling. Notably, NO₂ calibration benefited significantly from the inclusion of O₃ measurements as an input feature, and vice versa, underscoring the value of accounting for cross-sensitivities in calibration workflows.
 
@@ -183,7 +183,7 @@ For SO₂, no dominant feature emerged. Both environmental variables and cross-s
 
 An analysis of training data requirements showed that increasing the fraction of available data improved model performance, but gains plateaued beyond a certain point (around 70%). Monthly calibration cycles consistently outperformed 3- or 6-month intervals, primarily because they minimized the effects of seasonal drift and sensor aging, which degrade model accuracy over time if not periodically corrected.
 
-<img src="fig11.png" alt="Training Data Impact" width="750"/>
+<img src="fig11.png" alt="Training Data Impact" width="1000"/>
 
 Moreover, employing an interceptive sampling strategy—selecting samples across the full range of conditions rather than just temporally contiguous data—greatly reduced the amount of training data needed. In some cases, using only 22% of available data was sufficient to maintain performance comparable to models trained on 80% or more data. This has profound implications for deployment costs: co-location periods with reference stations can be dramatically shortened without sacrificing calibration quality.
 
