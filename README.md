@@ -39,7 +39,7 @@ The objectives of the project are multifaceted:
 
 Measurements were collected from an urban roadside monitoring station at Strovolou Avenue, Nicosia, Cyprus.
 
-<img src="fig1.png" alt="Site Location" width="850"/>
+<img src="process.png" alt="Site Location" width="850"/>
 
 Key elements of the experimental setup include:
 
