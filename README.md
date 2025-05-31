@@ -1,37 +1,45 @@
 # Sensor Calibration and Air Quality Monitoring in Nicosia, Cyprus
 
-> A comprehensive study applying advanced machine learning techniques for the calibration of low-cost gas sensors used in urban air quality monitoring in Nicosia, Cyprus.
-
----
+>This study presents a comprehensive application of advanced machine learning (ML) techniques to calibrate low-cost gas sensors (LCSs) used in urban air quality monitoring in Nicosia, Cyprus. While LCSs are cost-effective and enhance the spatial and temporal resolution of air quality networks, their performance is often degraded by environmental factors such as temperature, humidity, and cross-sensitivities to non-target gases. To address these challenges, several ML algorithms were evaluated for calibrating LCS measurements of CO, NO₂, O₃, and SO₂ against reference instruments, with Random Forest emerging as the most effective model. The study further analyzed the impact of temporal resolution on calibration performance, revealing up to 21% improvement when using higher resolution data. Additionally, it explored the minimum amount of training data needed to maintain calibration quality under different calibration frequencies. Results showed that with strategic data sampling and retrospective calibration, the required training data could be reduced to as little as 22%, while still meeting the EU’s criteria for indicative measurements. These findings demonstrate that ML calibration significantly enhances LCS reliability, supporting their wider adoption in air quality monitoring applications.
 
 ## 📍 Introduction
 
-Air pollution remains one of the most critical environmental and public health challenges of the 21st century. Exposure to elevated concentrations of pollutants such as carbon monoxide (CO), nitrogen dioxide (NO₂), ozone (O₃), and sulfur dioxide (SO₂) is linked to respiratory diseases, cardiovascular issues, and premature mortality.
+Air pollution remains one of the most pressing environmental and public health challenges of the 21st century. Exposure to elevated levels of air pollutants such as carbon monoxide (CO), nitrogen dioxide (NO₂), ozone (O₃), and sulfur dioxide (SO₂) has been consistently linked to respiratory illnesses, cardiovascular conditions, and increased rates of premature mortality. As a result, continuous and accurate monitoring of air quality is essential for public health protection and environmental policy enforcement.
 
-Traditionally, air quality is monitored through reference-grade analyzers that provide highly accurate measurements conforming to international standards. However, these instruments are prohibitively expensive, require complex maintenance, and are sparsely deployed, leading to insufficient spatial coverage.
+Traditionally, air quality monitoring is carried out using reference-grade analyzers at designated observational stations. These instruments offer highly precise and reliable measurements that conform to international standards, making them suitable for regulatory applications. However, their high installation and maintenance costs limit their widespread deployment, leading to sparse spatial coverage—especially in urban areas where pollution exposure is highly localized and variable.
 
-Low-cost sensors (LCSs) based on electrochemical principles present a promising solution for enhancing the spatio-temporal resolution of air quality data. Nonetheless, they suffer from limitations such as:
-- Signal drift over time,
-- Cross-sensitivity to other gases,
-- Environmental influences like temperature and humidity,
-- Non-linear responses across pollutant concentration ranges.
+To address the limitations of conventional monitoring networks, the scientific community has increasingly turned to low-cost sensors (LCSs), particularly those based on electrochemical principles. These sensors offer a promising means to enhance the spatial and temporal resolution of air quality monitoring systems at a fraction of the cost. Their affordability, ease of use, and portability have made them attractive not only for institutional monitoring but also for personal and community-level air quality assessments.
 
-Consequently, raw outputs from LCSs often fall short of the data quality requirements for regulatory applications. Calibration, particularly through machine learning (ML) models, has emerged as a key approach to address these deficiencies by mapping raw sensor outputs to reference-grade measurements.
+Despite their advantages, LCSs face a number of performance challenges that hinder their use in regulatory and high-precision monitoring. Key issues include signal drift over time, sensitivity to temperature and humidity fluctuations, cross-interference from non-target gases, and non-linear response patterns across different pollutant concentration ranges. These limitations often result in significant deviations from reference-grade instrument readings, particularly when LCSs are used in uncontrolled real-world environments.
 
-This project evaluates the performance of five ML algorithms in calibrating electrochemical LCSs under real-world urban conditions and assesses whether their outputs can meet European Union (EU) and United States Environmental Protection Agency (EPA) data quality objectives (DQOs).
+To mitigate these shortcomings, post-deployment calibration has become a central strategy, with machine learning (ML) models emerging as a particularly effective solution. Unlike traditional calibration methods, ML algorithms can account for complex, non-linear relationships between raw sensor readings and environmental conditions, enabling more accurate mapping to reference-grade values. This approach typically requires the colocation of LCSs and reference instruments over a defined period to gather training data that reflects real-world variability.
+
+In this project, we evaluate the performance of five ML algorithms—Linear Regression (LR), Support Vector Regression (SVR), Random Forest (RF), Artificial Neural Networks (ANN), and Extreme Gradient Boosting (XGBoost)—in calibrating LCS data collected over six months at a traffic monitoring station in Nicosia, Cyprus. The study investigates not only the predictive accuracy of each algorithm but also the influence of practical factors such as the temporal resolution of the data, sampling strategy, and calibration frequency. A key focus is on determining the minimum data requirements for training while still achieving data quality objectives (DQOs) as defined by the European Union (EU) and the United States Environmental Protection Agency (EPA), thus evaluating whether calibrated LCSs can serve as reliable tools for indicative air quality monitoring.
+
 
 ---
 
 ## 🎯 Project Objectives
 
-The objectives of the project are multifaceted:
+The overarching goal of this project is to evaluate and improve the performance of low-cost air quality sensors (LCSs) using machine learning (ML) techniques under real-world urban conditions. The specific objectives of the study are outlined below:
 
-- Evaluate the initial performance of LCSs using laboratory calibrations under field conditions.
-- Apply and compare machine learning models (LR, SVR, RF, ANN, XGBoost) for in-situ sensor calibration.
-- Analyze the impact of data sampling strategies and calibration frequencies on model effectiveness.
-- Investigate how much training data is necessary for achieving regulatory compliance.
-- Assess whether post-calibration outputs meet the standards stipulated in EU Directive 2008/50/EC and US EPA guidelines.
-- Explore the feature importance of variables such as temperature, humidity, and cross-sensitivities.
+### 📌 1. Evaluate Baseline Sensor Performance in the Field
+Before applying any advanced calibration techniques, the study begins by assessing how LCSs—typically calibrated under controlled laboratory conditions—perform when deployed in the field. This involves comparing raw sensor outputs with co-located reference-grade measurements to understand the extent of deviations and limitations due to environmental variables such as temperature, humidity, and interfering pollutants.
+
+###  ⚙️ 2. Apply and Compare Machine Learning Models for In-Situ Calibration
+A core objective is to implement and compare the performance of five ML algorithms—Linear Regression (LR), Support Vector Regression (SVR), Random Forest (RF), Artificial Neural Networks (ANN), and Extreme Gradient Boosting (XGBoost)—for post-deployment calibration of sensor data. Each model is evaluated based on its ability to correct measurement biases and produce outputs that closely align with reference-grade instruments.
+
+###  🔁 3. Analyze Data Sampling Strategies and Calibration Frequencies
+The study examines how the choice of data sampling strategy (e.g., continuous vs. intermittent sampling) and calibration frequency (e.g., monthly, quarterly, biannually) affect the accuracy and robustness of the ML calibration models. This analysis is critical for determining cost-effective yet reliable deployment strategies for long-term sensor operation in urban air quality monitoring networks.
+
+### 📊 4. Determine Minimum Data Requirements for Effective Calibration
+Another objective is to investigate the minimum amount of training data required to build accurate and reliable ML calibration models. The aim is to strike a balance between minimizing data collection efforts and maximizing model performance, while still meeting the quality thresholds set by regulatory bodies.
+
+###  📏 5. Assess Regulatory Compliance of Calibrated Outputs
+The post-calibration outputs are evaluated against the data quality objectives (DQOs) defined in the European Union’s Ambient Air Quality Directive (2008/50/EC) and the United States Environmental Protection Agency (EPA) guidelines. Specifically, the study assesses whether the calibrated sensor data meets the criteria for "indicative measurements," which require expanded uncertainties within prescribed limits for different pollutants.
+
+###  🧠 6. Explore Feature Importance and Environmental Influences
+Finally, the study explores the relative importance of various input features—such as temperature, relative humidity, and the presence of interfering gases—in influencing sensor measurements. This analysis helps to interpret the behavior of ML models and provides insights into which variables most significantly affect the accuracy of LCSs, thus guiding future sensor design and deployment strategies.
 
 ---
 
